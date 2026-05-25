@@ -1,13 +1,17 @@
 package com.bot;
 
 import com.bot.core.TwitchBotService;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.Scanner;
 
 public class Main {
     static void main() {
-        String token = null;
-        String channelToRead = "le_gennex";
+
+        Dotenv dotenv = Dotenv.load();
+        String token = dotenv.get("TWITCH_OAUTH_TOKEN");
+        String channelToRead = dotenv.get("TWITCH_CHANNEL");
+
         TwitchBotService botService = new TwitchBotService();
         botService.start(token, channelToRead);
 
