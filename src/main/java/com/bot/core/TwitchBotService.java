@@ -1,7 +1,6 @@
 package com.bot.core;
 
 import com.bot.listeners.TwitchChatListener;
-import com.github.philippheuer.credentialmanager.domain.Credential;
 import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.philippheuer.events4j.simple.SimpleEventHandler;
 import com.github.twitch4j.TwitchClient;
@@ -19,6 +18,7 @@ public class TwitchBotService {
 
         if (oAuthToken != null && !oAuthToken.isEmpty()) {
             OAuth2Credential credential = new OAuth2Credential("twitch", oAuthToken);
+            builder.withChatAccount(credential);
         } else {
             IO.println("Kein Token übergeben. Verbinde anonym...");
         }

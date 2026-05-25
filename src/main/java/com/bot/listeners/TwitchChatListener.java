@@ -4,6 +4,7 @@ import com.github.philippheuer.events4j.simple.domain.EventSubscriber;
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
 
 public class TwitchChatListener {
+    @SuppressWarnings("unused")
     @EventSubscriber
     public void onChannelMessage(ChannelMessageEvent event) {
         String user = event.getUser().getName();
