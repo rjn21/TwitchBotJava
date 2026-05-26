@@ -22,7 +22,12 @@ public class Main {
         System.out.println("==================================================");
 
         Scanner scanner = new Scanner(System.in);
-        scanner.nextLine(); // Hier bleibt das Programm "stehen" und wartet auf dich.
+        while (scanner.hasNextLine()) {
+            String input = scanner.nextLine();
+            if (input.trim().equalsIgnoreCase("exit")) {
+                break;
+            }
+        }
 
         // Wenn du ENTER drückst, springt er hierhin und beendet alles sauber
         System.out.println("Beende das Programm manuell...");
