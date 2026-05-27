@@ -10,6 +10,7 @@ public class CommandRegistry {
 
     public CommandRegistry() {
         registerCommand("ping", new PingCommand());
+        registerCommand("hug", new HugCommand());
     }
 
     public void registerCommand(String commandName, ChatCommand command) {
