@@ -12,20 +12,21 @@ public class TwitchBotService {
 
     public void start(String oAuthToken, String channel) {
         IO.println("Verbindung zu Twitch wird hergestellt");
-//        OAuth2Credential credential = new OAuth2Credential("twitch", oAuthToken);
-        com.github.twitch4j.TwitchClientBuilder builder = TwitchClientBuilder.builder()
-                .withEnableChat(true);
+        OAuth2Credential credential = new OAuth2Credential("twitch", oAuthToken);
 
-        if (oAuthToken != null && !oAuthToken.isEmpty()) {
-            OAuth2Credential credential = new OAuth2Credential("twitch", oAuthToken);
-            builder.withChatAccount(credential);
+        if (oAuthToken.isEmpty()) {
+            this.twitchClient = TwitchClientBuilder.builder()
+                    .withEnableChat(true)
+                    .build();
         } else {
-            IO.println("Kein Token übergeben. Verbinde anonym...");
+            this.twitchClient = TwitchClientBuilder.builder()
+                    .withChatAccount(credential)
+                    .withEnableChat(true)
+                    .build();
         }
 
-        this.twitchClient = builder.build();
-
         TwitchChatListener chatListener = new TwitchChatListener();
+
         this.twitchClient.getEventManager()
                 .getEventHandler(SimpleEventHandler.class)
                 .registerListener(chatListener);

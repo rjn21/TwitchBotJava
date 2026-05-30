@@ -7,9 +7,9 @@ import java.util.Scanner;
 
 public class Main {
     static void main() {
-//        le Test
         Dotenv dotenv = Dotenv.load();
-        String token = dotenv.get("TWITCH_OAUTH_TOKEN");
+        String token = "oauth:" + dotenv.get("ACCESS_TOKEN");
+
         String channelToRead = dotenv.get("TWITCH_CHANNEL");
 
         TwitchBotService botService = new TwitchBotService();
