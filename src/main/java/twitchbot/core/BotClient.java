@@ -1,0 +1,45 @@
+package twitchbot.core;
+
+import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
+import com.github.philippheuer.events4j.simple.SimpleEventHandler;
+import com.github.twitch4j.TwitchClient;
+import com.github.twitch4j.TwitchClientBuilder;
+import twitchbot.config.BotConfig;
+import twitchbot.handlers.ChatEventHandler;
+
+@SuppressWarnings("ALL")
+public class BotClient {
+    private TwitchClient twitchClient;
+
+    private BotConfig botConfig;
+
+    public void start() {
+        this.botConfig = new BotConfig();
+        OAuth2Credential credential = new OAuth2Credential("twitch", botConfig.getOauthToken());
+        this.twitchClient = TwitchClientBuilder.builder()
+                .withEnableChat(true)
+                .withChatAccount(credential)
+                .build();
+
+        this.twitchClient.getChat().joinChannel(botConfig.getChannelName());
+
+        ChatEventHandler eventHandler = new ChatEventHandler(this);
+        this.twitchClient.getEventManager().getEventHandler(SimpleEventHandler.class).registerListener(eventHandler);
+
+        System.out.println("Bot [" + botConfig.getBotName() + "] wurde erfolgreich gestartet.");
+    }
+
+    public void sendMessage(String channel, String message) {
+        if (this.twitchClient != null && this.twitchClient.getChat() != null) {
+            this.twitchClient.getChat().sendMessage(channel, message);
+        }
+    }
+
+    public BotConfig getBotConfig() {
+        return botConfig;
+    }
+
+    public TwitchClient getTwitchClient() {
+        return twitchClient;
+    }
+}
