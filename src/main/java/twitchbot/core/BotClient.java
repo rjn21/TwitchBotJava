@@ -28,6 +28,7 @@ public class BotClient {
 
         this.twitchClient.getChat().joinChannel(botConfig.getChannelName());
         this.scheduler = Executors.newScheduledThreadPool(4);
+        this.duelManager = new DuelManager(scheduler);
         ChatEventHandler eventHandler = new ChatEventHandler(this);
         this.twitchClient.getEventManager().getEventHandler(SimpleEventHandler.class).registerListener(eventHandler);
 
