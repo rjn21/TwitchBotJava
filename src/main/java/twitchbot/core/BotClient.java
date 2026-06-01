@@ -6,11 +6,13 @@ import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
 import twitchbot.config.BotConfig;
 import twitchbot.handlers.ChatEventHandler;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @SuppressWarnings("ALL")
 public class BotClient {
     private TwitchClient twitchClient;
-
+    private ScheduledExecutorService scheduler;
     private BotConfig botConfig;
 
     public void start() {
@@ -22,7 +24,7 @@ public class BotClient {
                 .build();
 
         this.twitchClient.getChat().joinChannel(botConfig.getChannelName());
-
+        this.scheduler = Executors.newScheduledThreadPool(4);
         ChatEventHandler eventHandler = new ChatEventHandler(this);
         this.twitchClient.getEventManager().getEventHandler(SimpleEventHandler.class).registerListener(eventHandler);
 
@@ -41,5 +43,9 @@ public class BotClient {
 
     public TwitchClient getTwitchClient() {
         return twitchClient;
+    }
+
+    public ScheduledExecutorService getScheduler() {
+        return this.scheduler;
     }
 }
