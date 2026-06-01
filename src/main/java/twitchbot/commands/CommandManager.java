@@ -1,6 +1,7 @@
 package twitchbot.commands;
 
 import com.github.twitch4j.chat.events.channel.ChannelMessageEvent;
+import twitchbot.commands.impl.DuelCommand;
 import twitchbot.commands.impl.HugCommand;
 import twitchbot.commands.impl.PingCommand;
 import twitchbot.core.BotClient;
@@ -27,14 +28,12 @@ public class CommandManager {
                 command.execute(event, bot, args);
             }
         }
-
-
-
     }
 
     public CommandManager() {
         registerCommand(new PingCommand());
         registerCommand(new HugCommand());
+        registerCommand(new DuelCommand());
     }
 
     private void registerCommand(ChatCommand command) {
