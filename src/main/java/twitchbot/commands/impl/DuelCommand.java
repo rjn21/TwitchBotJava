@@ -16,7 +16,7 @@ public class DuelCommand implements ChatCommand {
         String sender = event.getUser().getName();
 
         if (args.length == 0) {
-            bot.sendMessage((channel, "@" + sender + ", Nutzung: !duell <Name> ODER !duell accept");
+            bot.sendMessage(channel, "@" + sender + ", Nutzung: !duell <Name> ODER !duell accept");
             return;
         }
 
