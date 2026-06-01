@@ -4,8 +4,10 @@ import com.github.philippheuer.credentialmanager.domain.OAuth2Credential;
 import com.github.philippheuer.events4j.simple.SimpleEventHandler;
 import com.github.twitch4j.TwitchClient;
 import com.github.twitch4j.TwitchClientBuilder;
+import twitchbot.commands.DuelManager;
 import twitchbot.config.BotConfig;
 import twitchbot.handlers.ChatEventHandler;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -14,6 +16,7 @@ public class BotClient {
     private TwitchClient twitchClient;
     private ScheduledExecutorService scheduler;
     private BotConfig botConfig;
+    private DuelManager duelManager;
 
     public void start() {
         this.botConfig = new BotConfig();
@@ -47,5 +50,9 @@ public class BotClient {
 
     public ScheduledExecutorService getScheduler() {
         return this.scheduler;
+    }
+
+    public DuelManager getDuelManager() {
+        return duelManager;
     }
 }
