@@ -21,7 +21,7 @@ public class DuelManager {
 
         Runnable timeoutAction = () -> bot.sendMessage(
                 channel,
-                "Das Duell zwischen @" + challenger + " und @" + target + "ist abgelaufen."
+                "Das Duell zwischen @" + challenger + " und @" + target + " ist abgelaufen."
         );
 
         PendingRequest<Void> request = new PendingRequest<>(channel, challenger, target, null);

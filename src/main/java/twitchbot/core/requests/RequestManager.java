@@ -20,7 +20,7 @@ public class RequestManager<T> {
 
     public boolean createRequest(PendingRequest<T> request, int timeoutMinutes, Runnable onTimeout) {
         String key = buildKey(request.getChannel(), request.getTarget());
-        if (requests.containsKey(key)) return false;
+        if (requests.putIfAbsent(key, request) != null) return false;
 
         var timeoutTask = this.scheduler.schedule(() -> {
             if (requests.remove(key) != null) {
@@ -29,7 +29,6 @@ public class RequestManager<T> {
         }, timeoutMinutes, TimeUnit.MINUTES);
 
         request.setTimeoutTask(timeoutTask);
-        requests.put(key, request);
         return true;
     }
 

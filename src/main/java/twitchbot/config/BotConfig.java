@@ -14,13 +14,27 @@ public class BotConfig {
     }
 
     private void loadEnv() {
+        Dotenv dotenv;
         try {
-            Dotenv dotenv = Dotenv.load();
-            oauthToken = dotenv.get("ACCESS_TOKEN");
-            channelName = dotenv.get("CHANNEL_NAME");
-            botName = dotenv.get("BOT_NAME");
+            dotenv = Dotenv.load();
         } catch (Exception ex) {
-            System.err.println("Fehler bei lesen der .env: " + ex);
+            throw new IllegalStateException("Fehler beim Lesen der .env-Datei: " + ex.getMessage(), ex);
+        }
+
+        oauthToken = dotenv.get("ACCESS_TOKEN");
+        channelName = dotenv.get("CHANNEL_NAME");
+        botName = dotenv.get("BOT_NAME");
+
+        requireValue("ACCESS_TOKEN", oauthToken);
+        requireValue("CHANNEL_NAME", channelName);
+        requireValue("BOT_NAME", botName);
+    }
+
+    private void requireValue(String key, String value) {
+        if (value == null || value.isBlank()) {
+            throw new IllegalStateException(
+                    "Pflichtwert '" + key + "' fehlt oder ist leer. Bitte in der .env-Datei setzen."
+            );
         }
     }
 
